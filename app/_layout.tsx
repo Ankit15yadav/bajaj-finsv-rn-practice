@@ -15,7 +15,7 @@ export default function RootLayout() {
       },
       headerLeft: () => (
         <TouchableOpacity
-          onPress={() => router.back()}
+          onPress={() => router.replace('/home')}
           style={{
             width: 30,
             height: 50,
