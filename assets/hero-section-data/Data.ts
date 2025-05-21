@@ -1,32 +1,38 @@
-import { CardData } from "@/types/hero-section-card"
-import { Bandage, Hospital, Microscope, Stethoscope } from "lucide-react-native"
+import { CardData } from "@/types/hero-section-card";
 export const CardItem: CardData[] = [
     {
         id: 1,
         title: "Doctors",
-        icon: Stethoscope,
+        icon: 'doctor-svgrepo.png',
         off: false,
         offValue: 0
     },
     {
         id: 2,
         title: "Lab Tests",
-        icon: Microscope,
+        icon: 'microscope.png',
         off: false,
         offValue: 0
     },
     {
         id: 3,
         title: "Hospitals",
-        icon: Hospital,
+        icon: 'hospital.png',
         off: false,
         offValue: 0
     },
     {
         id: 4,
         title: "Pharmacy",
-        icon: Bandage,
+        icon: 'pharmacy.png',
         off: false,
         offValue: 0
     },
 ]
+
+export const imageMap: Record<string, any> = {
+    "doctor-svgrepo.png": require("@/assets/images/doctor-svgrepo.png"),
+    "microscope.png": require("@/assets/images/microscope.png"),
+    "hospital.png": require("@/assets/images/hospital.png"),
+    "pharmacy.png": require("@/assets/images/pharmacy.png"),
+};

@@ -1,20 +1,22 @@
-import { CardItem } from '@/assets/hero-section-data/Data'
-import { useNavigation } from '@react-navigation/native'
-import * as Haptics from 'expo-haptics'
+import { CardItem, imageMap } from '@/assets/hero-section-data/Data'
+import * as Haptic from "expo-haptics"
 import { router } from 'expo-router'
 import { HeartIcon, MicIcon, Search } from 'lucide-react-native'
 import React from 'react'
-import { ScrollView, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
 const Home = () => {
 
-    const navigator = useNavigation()
-
     return (
-        <ScrollView>
+        <ScrollView
+            style={{
+                backgroundColor: 'white'
+            }}
+        >
             {/* main view */}
             <View
                 style={{
+                    backgroundColor: ''
                 }}
             >
                 {/* cards of the doc, lab , hospital , pharmacy */}
@@ -40,7 +42,7 @@ const Home = () => {
                             >
                                 <View
                                     style={{
-                                        backgroundColor: '#E6E6E6',
+                                        backgroundColor: '#f3f4f6',
                                         height: 75,
                                         width: 75,
                                         borderRadius: 20,
@@ -51,14 +53,24 @@ const Home = () => {
 
                                     }}
                                 >
-                                    <card.icon size={40}
+                                    {/* <card.icon size={40}
                                         color={'#004DA8'}
+                                    /> */}
+                                    <Image
+                                        source={imageMap[String(card.icon)]}
+                                        width={2}
+                                        height={2}
+                                        style={{
+                                            width: 40,
+                                            height: 40
+                                        }}
                                     />
                                 </View>
                                 <Text
                                     style={{
                                         fontSize: 13,
-                                        fontWeight: "600"
+                                        fontWeight: "700",
+                                        color: "gray"
                                     }}
                                 >
                                     {card.title}
@@ -116,41 +128,46 @@ const Home = () => {
                             alignItems: 'center',
                             justifyContent: "space-between",
                             width: '100%',
-                            // borderWidth: 1,
-                            padding: 12,
+                            padding: 13,
                             marginTop: 15,
                             borderRadius: 10,
-                            backgroundColor: "white"
-
-
+                            backgroundColor: "white",
+                            shadowColor: "#000",
+                            shadowOffset: {
+                                width: 0,
+                                height: 2,
+                            },
+                            shadowOpacity: 0.25,
+                            shadowRadius: 3.84,
+                            elevation: 5,
                         }}
                     >
-                        <TextInput
+                        <TouchableOpacity
                             style={{
-                                // borderWidth: 1,
-                                boxShadow: '',
                                 padding: 2,
-                                // borderRadius: 10,
-                                // backgroundColor: 'white',
-                                color: 'grey',
-                                fontSize: 10,
                                 flex: 1,
-                                fontWeight: "800"
-
                             }}
-                            placeholder='Search Doctors, Hospitals, Symptoms ...'
-                            placeholderTextColor={'gray'}
-                            // onPress={() => router.push("/notification")}
-                            onFocus={() => router.push('/notification')}
-                            onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium)}
+                            onPress={() => {
+                                router.push("/notification")
+                                Haptic.impactAsync()
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    fontSize: 10,
+                                    fontWeight: "800",
+                                    color: 'gray'
+                                }}
+                            >
+                                Search Doctors, Hospitals, Symptoms ...
+                            </Text>
+                        </TouchableOpacity>
 
-                        />
                         <View
                             style={{
                                 flexDirection: "row",
                                 alignItems: 'center',
                                 gap: 10
-                                // marginTop: 15
                             }}
                         >
                             <Search size={20} color={'#004da8'} strokeWidth={3} />

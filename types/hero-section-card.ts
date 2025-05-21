@@ -1,9 +1,8 @@
-import { LucideIcon } from "lucide-react-native"
 
 export interface CardData {
     id: number,
     title: string,
-    icon: LucideIcon
+    icon: String
     off: boolean
     offValue: number
 }

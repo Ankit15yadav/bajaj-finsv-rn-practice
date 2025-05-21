@@ -1,56 +1,71 @@
+import { TabData } from "@/Data/Tabs-data";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import * as Haptic from 'expo-haptics';
 import { Tabs } from "expo-router";
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
 export default function RootTabLayout() {
     return <Tabs
-        screenOptions={{
+        screenOptions={({ route }) => ({
             headerShown: false,
             tabBarActiveTintColor: '#004DA8',
-        }}
-    >
-        <Tabs.Screen name="home" options={{
-            headerShown: false,
-            title: "Home",
-            tabBarIcon: ({ color }) => (
-                <Ionicons name="home" size={18} color={color} />
-            )
-        }} />
-        <Tabs.Screen name="wellsure"
-            options={{
-                headerShown: true,
-                title: "Wellsure",
-                tabBarIcon: ({ color }) => (
-                    <Ionicons name="medkit" size={18} color={color} />
-                )
-            }}
-        />
-        <Tabs.Screen
-            name="health-pay"
-            options={{
-                headerShown: true,
-                title: "Health Pay",
-                tabBarIcon: ({ color }) => (
-                    <Ionicons name="logo-paypal" size={18} color={color} />
-                )
-            }} />
+            tabBarInactiveTintColor: 'gray',
+            tabBarStyle: styles.tabBar,
+            tabBarIcon: ({ color, focused }) => {
+                // Find the corresponding tab data
+                const tab = TabData.find((t) => t.name === route.name);
 
-        <Tabs.Screen
-            name="active-plans"
-            options={{
-                headerShown: true,
-                title: "Active Plans",
-                tabBarIcon: ({ color }) => (
-                    <Ionicons name="paper-plane" size={18} color={color} />
-                )
-            }} />
-        <Tabs.Screen
-            name="health-files"
-            options={{
-                headerShown: true,
-                title: "Health Files",
-                tabBarIcon: ({ color }) => (
-                    <Ionicons name="file-tray-full" size={18} color={color} />
-                )
-            }} />
+                return (
+                    <View style={styles.tabIconContainer}>
+                        {/* Top indicator, only visible when focused */}
+                        {focused && (
+                            <View style={styles.activeIndicator} />
+                        )}
+                        <Ionicons
+                            name={tab?.iconName as React.ComponentProps<typeof Ionicons>['name']}
+                            size={18}
+                            color={color}
+                        />
+                    </View>
+                );
+            },
+        })}
+    >
+        {
+            TabData.map((tab) => (
+                <Tabs.Screen
+                    key={tab.id}
+                    name={tab.name}
+                    options={{
+                        headerShown: tab.id === 1 ? false : true,
+                        title: tab.title,
+                    }}
+                    listeners={{
+                        tabPress: () => (
+                            Haptic.impactAsync(Haptic.ImpactFeedbackStyle.Medium)
+                        )
+                    }}
+                />
+            ))
+        }
     </Tabs>
 }
+
+const styles = StyleSheet.create({
+    tabBar: {
+        height: 90,
+        paddingBottom: 10,
+    },
+    tabIconContainer: {
+        alignItems: 'center',
+    },
+    activeIndicator: {
+        position: 'absolute',
+        top: -10,
+        width: 60,
+        height: 3,
+        backgroundColor: '#004DA8',
+        borderRadius: 10,
+    }
+});

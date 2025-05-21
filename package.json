@@ -1,5 +1,5 @@
 {
-  "name": "bajaj_rn",
+  "name": "bajajrn",
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
@@ -50,5 +50,12 @@
     "eslint": "^9.25.0",
     "eslint-config-expo": "~9.2.0"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "listUnknownPackages": false
+      }
+    }
+  }
 }
