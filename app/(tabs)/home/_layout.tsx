@@ -9,13 +9,17 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 export default function Layout() {
 
     const screenWidth = Dimensions.get('window').width
+    const isLargeScreen = Dimensions.get('window').width >= 768;
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
             <Drawer
                 drawerContent={customDrawerContent}
                 screenOptions={{
                     drawerStyle: {
-                        width: screenWidth * 0.75
+                        width: screenWidth * 0.75,
+                        zIndex: 12000,
+                        elevation: 20
+
                     },
                     drawerHideStatusBarOnOpen: false,
                     headerShown: true,

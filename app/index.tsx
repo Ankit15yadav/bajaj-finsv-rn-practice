@@ -21,24 +21,6 @@ export default function RootLayout() {
           setting.tsx
         </Text>
       </TouchableOpacity>
-
-      {/* <Link href={"/user/7"}>
-        User
-      </Link> */}
-      {/* <Link
-        href={{
-          pathname: "/product/[...rest]",
-          params: { rest: ["deal", "big-billion-days", "laptop", "500000"] },
-        }}
-      >
-        Product
-      </Link>
-      <Link href={{
-        pathname: '/product/[...rest]',
-        params: { rest: ['deal'] }
-      }}> */}
-      products
-      {/* </Link> */}
     </View>
   );
 }
