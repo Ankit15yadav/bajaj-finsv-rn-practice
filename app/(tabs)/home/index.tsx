@@ -149,7 +149,7 @@ const Home = () => {
                             }}
                             onPress={() => {
                                 router.push("/notification")
-                                Haptic.impactAsync()
+                                Haptic.impactAsync(Haptic.ImpactFeedbackStyle.Soft)
                             }}
                         >
                             <Text
