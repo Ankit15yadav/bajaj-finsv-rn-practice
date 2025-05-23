@@ -1,7 +1,6 @@
 import { Login } from '@/types/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Checkbox } from 'expo-checkbox';
-import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
     Image,
@@ -21,6 +20,27 @@ const SignIn = () => {
         notifications: false,
         Terms: false
     });
+
+    const handleLogin = async () => {
+
+        console.log("button is clicked")
+        try {
+            const response = await fetch("http://192.168.1.6:4000/get", {
+                method: 'GET'
+            })
+
+            if (response.ok) {
+                // console.log("hogya hogya login hogya")
+            }
+
+            const { status, message } = await response.json()
+            console.log(message, status)
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
 
     return (
         <SafeAreaView style={styles.safeArea}>
@@ -184,7 +204,7 @@ const SignIn = () => {
                             backgroundColor: (formData.phoneNumber.length < 10 || !formData.Terms) ? "#336ebd" : "#004da8"
                         }}
                         disabled={formData.phoneNumber.length < 10 || !formData.Terms}
-                        onPress={() => router.push("/home")}
+                        onPress={handleLogin}
                     >
                         <Text
                             style={{
