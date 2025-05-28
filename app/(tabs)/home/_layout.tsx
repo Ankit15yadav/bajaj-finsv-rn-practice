@@ -6,7 +6,7 @@ import { Drawer } from 'expo-router/drawer';
 import { Dimensions, TouchableOpacity } from "react-native";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-export default function Layout() {
+const Layout = () => {
 
     const screenWidth = Dimensions.get('window').width
     const isLargeScreen = Dimensions.get('window').width >= 768;
@@ -62,3 +62,6 @@ export default function Layout() {
         </GestureHandlerRootView>
     );
 }
+
+
+export default Layout

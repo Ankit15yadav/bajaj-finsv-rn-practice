@@ -1,6 +1,7 @@
 import { Login } from '@/types/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Checkbox } from 'expo-checkbox';
+import { router } from 'expo-router';
 import React, { useState } from 'react';
 import {
     Image,
@@ -25,19 +26,22 @@ const SignIn = () => {
 
         console.log("button is clicked")
         try {
-            const response = await fetch("http://192.168.1.6:4000/get", {
-                method: 'GET'
-            })
+            // const response = await fetch("http://192.168.1.6:4000/get", {
+            //     method: 'GET'
+            // })
 
-            if (response.ok) {
-                // console.log("hogya hogya login hogya")
-            }
+            // if (response.ok) {
+            //     // console.log("hogya hogya login hogya")
+            // }
 
-            const { status, message } = await response.json()
-            console.log(message, status)
+            // const { status, message } = await response.json()
+            // console.log(message, status)
 
         } catch (error) {
             console.log(error)
+        }
+        finally {
+            router.push("/home")
         }
 
     }

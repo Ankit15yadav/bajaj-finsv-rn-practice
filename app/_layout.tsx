@@ -1,3 +1,4 @@
+import "@/global.css";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router, Stack } from "expo-router";
 import { TouchableOpacity } from "react-native";
