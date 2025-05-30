@@ -2,6 +2,7 @@ import { Login } from '@/types/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Checkbox } from 'expo-checkbox';
 import { router } from 'expo-router';
+import * as SecureStore from 'expo-secure-store';
 import React, { useState } from 'react';
 import {
     Image,
@@ -14,6 +15,13 @@ import {
 import CountryFlag from "react-native-country-flag";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
+
+
+async function save(key: string, value: string) {
+    // store the hashed otp in the secure storage
+    await SecureStore.setItemAsync(key, value)
+}
+
 const SignIn = () => {
 
     const [formData, setFormData] = useState<Login>({
@@ -24,24 +32,30 @@ const SignIn = () => {
 
     const handleLogin = async () => {
 
+
         console.log("button is clicked")
         try {
-            // const response = await fetch("http://192.168.1.6:4000/get", {
-            //     method: 'GET'
-            // })
+            const response = await fetch("http://192.168.1.42:4000/api/auth/login", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    phoneNumber: formData.phoneNumber
+                })
+            })
 
-            // if (response.ok) {
-            //     // console.log("hogya hogya login hogya")
-            // }
+            const { authToken, message, refreshToken, success, hashedOTP } = await response.json()
+            console.log([authToken, message, refreshToken, success])
 
-            // const { status, message } = await response.json()
-            // console.log(message, status)
+            if (response.ok) {
+                // console.log("hogya hogya login hogya")
+                save('otp', hashedOTP);
+                router.push("/notification")
+            }
 
         } catch (error) {
             console.log(error)
-        }
-        finally {
-            router.push("/home")
         }
 
     }
