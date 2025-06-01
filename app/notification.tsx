@@ -52,7 +52,9 @@ const NotificationPage = () => {
                 <TouchableOpacity
                     onPress={handleSubmit}
                 >
-                    <Text>
+                    <Text
+                        className='text-lg w-fit px-4 bg-purple-200 rounded-md'
+                    >
                         Submit
                     </Text>
                 </TouchableOpacity>

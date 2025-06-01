@@ -1,4 +1,5 @@
 import { Login } from '@/types/auth';
+import { StoreData } from '@/utils/asyncStorage';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Checkbox } from 'expo-checkbox';
 import { router } from 'expo-router';
@@ -10,7 +11,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View
+    View,
 } from 'react-native';
 import CountryFlag from "react-native-country-flag";
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -32,10 +33,10 @@ const SignIn = () => {
 
     const handleLogin = async () => {
 
-
-        console.log("button is clicked")
         try {
-            const response = await fetch("http://192.168.1.42:4000/api/auth/login", {
+
+            await StoreData('phoneNumber', formData.phoneNumber)
+            const response = await fetch("http://192.168.29.193:4000/api/auth/login", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -51,7 +52,7 @@ const SignIn = () => {
             if (response.ok) {
                 // console.log("hogya hogya login hogya")
                 save('otp', hashedOTP);
-                router.push("/notification")
+                router.push("/home")
             }
 
         } catch (error) {

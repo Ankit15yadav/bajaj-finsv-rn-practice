@@ -1,11 +1,15 @@
 import React from 'react'
-import { Text, View } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import OtpVerificationPage from '../(auth)/otp-verification'
 
 const Wellsure = () => {
     return (
-        <View>
-            <Text>Wellsure</Text>
-        </View>
+        <SafeAreaView
+            className='w-full min-h-screen bg-white'
+        >
+            <OtpVerificationPage />
+
+        </SafeAreaView>
     )
 }
 

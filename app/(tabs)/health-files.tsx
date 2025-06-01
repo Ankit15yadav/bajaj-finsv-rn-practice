@@ -4,7 +4,7 @@ import { Text, View } from 'react-native'
 const HealthFiles = () => {
     return (
         <View>
-            <Text>HealthFiles</Text>
+            <Text> this is health  </Text>
         </View>
     )
 }
