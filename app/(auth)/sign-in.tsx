@@ -18,8 +18,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 
-async function save(key: string, value: string) {
+export async function save(key: string, value: string) {
     // store the hashed otp in the secure storage
+    console.log("otp update hogya")
     await SecureStore.setItemAsync(key, value)
 }
 
@@ -47,12 +48,12 @@ const SignIn = () => {
             })
 
             const { authToken, message, refreshToken, success, hashedOTP } = await response.json()
-            console.log([authToken, message, refreshToken, success])
+            // console.log([authToken, message, refreshToken, success])
 
             if (response.ok) {
                 // console.log("hogya hogya login hogya")
-                save('otp', hashedOTP);
-                router.push("/home")
+                await save('otp', hashedOTP);
+                router.replace("/otp-verification")
             }
 
         } catch (error) {
