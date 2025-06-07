@@ -1,6 +1,7 @@
 import { Login } from '@/types/auth';
 import { StoreData } from '@/utils/asyncStorage';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Checkbox } from 'expo-checkbox';
 import { router } from 'expo-router';
 import * as SecureStore from 'expo-secure-store';
@@ -36,12 +37,15 @@ const SignIn = () => {
                 body: JSON.stringify({ phoneNumber: formData.phoneNumber })
             });
 
-            const { authToken, message, refreshToken, success, hashedOTP } = await response.json();
+            const { authToken, message, refreshToken, success, hashedOTP, firstTimeLogin } = await response.json();
 
-            if (response.ok) {
-                await save('otp', hashedOTP);
-                router.replace("/otp-verification");
+            if (!response.ok) {
+                throw new Error("ERROR WHILE LOGGING IN")
             }
+            await save('otp', hashedOTP);
+            await AsyncStorage.setItem("auth-token", authToken);
+            router.replace("/otp-verification");
+
         } catch (error) {
             console.log(error);
         }
