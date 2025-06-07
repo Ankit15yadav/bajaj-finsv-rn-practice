@@ -1,10 +1,8 @@
-import { Login } from '@/types/auth';
-import { StoreData } from '@/utils/asyncStorage';
+import { Login } from '@/service/operations/auth-api';
+import { LoginInterface } from '@/types/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Checkbox } from 'expo-checkbox';
-import { router } from 'expo-router';
-import * as SecureStore from 'expo-secure-store';
+
 import React, { useState } from 'react';
 import {
     Image,
@@ -16,39 +14,17 @@ import {
 import CountryFlag from "react-native-country-flag";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-export async function save(key: string, value: string) {
-    console.log("otp update hogya");
-    await SecureStore.setItemAsync(key, value);
-}
+
 
 const SignIn = () => {
-    const [formData, setFormData] = useState<Login>({
+    const [formData, setFormData] = useState<LoginInterface>({
         phoneNumber: '',
         notifications: false,
         Terms: false
     });
 
     const handleLogin = async () => {
-        try {
-            await StoreData('phoneNumber', formData.phoneNumber);
-            const response = await fetch("http://192.168.29.193:4000/api/auth/login", {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ phoneNumber: formData.phoneNumber })
-            });
-
-            const { authToken, message, refreshToken, success, hashedOTP, firstTimeLogin } = await response.json();
-
-            if (!response.ok) {
-                throw new Error("ERROR WHILE LOGGING IN")
-            }
-            await save('otp', hashedOTP);
-            await AsyncStorage.setItem("auth-token", authToken);
-            router.replace("/otp-verification");
-
-        } catch (error) {
-            console.log(error);
-        }
+        await Login(formData.phoneNumber);
     };
 
     return (

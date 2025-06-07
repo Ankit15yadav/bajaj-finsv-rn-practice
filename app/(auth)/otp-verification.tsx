@@ -1,4 +1,4 @@
-import { apiConnector } from '@/service/api-connector';
+import { ResendOtp } from '@/service/operations/auth-api';
 import { getStoredData } from '@/utils/asyncStorage';
 import { getOtp } from '@/utils/verify-otp';
 import bcrypt from 'bcryptjs';
@@ -13,9 +13,7 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTimer } from 'react-timer-hook';
-import { save } from './sign-in';
 
-const BASE_URL = 'http://192.168.29.193:4000/api/auth/login/otp/resend'
 
 const OtpVerificationPage = () => {
     const [phoneNumber, setPhoneNumber] = useState<string>('');
@@ -50,28 +48,8 @@ const OtpVerificationPage = () => {
     };
 
     const handleResendOtp = async () => {
-        try {
-            // const response = await fetch('http://192.168.29.193:4000/api/auth/login/otp/resend', {
-            //     method: 'POST',
-            //     headers: { 'Content-Type': 'application/json' },
-            //     body: JSON.stringify({ phoneNumber }),
-            // });
-
-            const response = await apiConnector(
-                'POST',
-                BASE_URL,
-                { phoneNumber },
-            )
-
-            if (!response) throw new Error("Failed to resend OTP");
-
-            const { hashedOTP } = response.data;
-            await save('otp', hashedOTP);
-            const updatedOtp = await getOtp('otp');
-            setStoredOtp(updatedOtp || '');
-        } catch (error) {
-            console.error(error);
-        }
+        const updatedOtp = await ResendOtp(phoneNumber)
+        setStoredOtp(updatedOtp || '');
     };
 
     return (
