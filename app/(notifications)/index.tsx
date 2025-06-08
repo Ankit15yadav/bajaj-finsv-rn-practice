@@ -1,8 +1,6 @@
 import React from 'react';
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-
-
 const NotificationPage = () => {
 
     return (
@@ -12,7 +10,7 @@ const NotificationPage = () => {
             <View className='w-full min-h-screen '
             >
                 {/* Notification type selection tab */}
-                <View className='h-16 px-4 py-3 flex flex-row ' // shadow here
+                < View className='h-16 px-4 py-3 flex flex-row ' // shadow here
                     style={styles.shadowStyle}
                 >
                     <View className='flex flex-row justify-start items-center'
@@ -28,11 +26,11 @@ const NotificationPage = () => {
                 </View>
 
                 {/* notification message view */}
-                <View className='mt-2  flex flex-col justify-center items-center min-h-screen px-4'>
-                    <Text className='font-semibold text-lg '>
+                <View className='mt-2  flex flex-col justify-center items-center min-h-screen px-4' >
+                    <Text className='font-semibold text-lg ' >
                         No New Notifications
                     </Text>
-                    <Text className='text-center mt-2 font-medium'>
+                    < Text className='text-center mt-2 font-medium' >
                         You're all caught up. We'll let you know when something new arrives
                     </Text>
                 </View>

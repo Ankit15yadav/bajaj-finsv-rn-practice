@@ -43,7 +43,7 @@ const Layout = () => {
                                     alignItems: 'center',
                                     justifyContent: "center",
                                 }}
-                                onPress={() => router.push('/notification')}
+                                onPress={() => router.push('/(notifications)')}
                             >
                                 <Ionicons
                                     name="notifications"

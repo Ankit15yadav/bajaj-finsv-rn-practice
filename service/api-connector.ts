@@ -1,11 +1,10 @@
 import { getStoredData, StoreData } from '@/utils/asyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosRequestHeaders, AxiosResponse, Method } from 'axios';
-import { useRouter } from 'expo-router';
+import { router } from 'expo-router';
 import { authEndpoints } from './apis';
 import { RefreshToken } from './operations/auth-api';
 
-const router = useRouter();
 
 export const axiosInstance = axios.create();
 export const apiConnector = (
@@ -67,8 +66,8 @@ axiosInstance.interceptors.response.use(
 
                 axiosInstance.defaults.headers['Authorization'] = `Bearer ${authToken}`
                 originalReq.headers['Authorization'] = `Bearer ${authToken}`
-
                 return axiosInstance(originalReq);
+
             } catch (refreshError) {
                 console.log("REFRESH TOKEN FAILED")
                 await AsyncStorage.clear();

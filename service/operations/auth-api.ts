@@ -84,7 +84,7 @@ export async function RefreshToken() {
             { phoneNumber }
         )
 
-        if (response.status != 200) throw new Error("ERROR GETTING THE AUTHENTICATION TOKEN RESPONSE")
+        if (response.status !== 200) throw new Error("ERROR GETTING THE AUTHENTICATION TOKEN RESPONSE")
 
         console.log('REFRESH TOKEN CALLED BY THE INTERCEPTOR')
         const { newAccessToken } = response?.data;
