@@ -1,5 +1,5 @@
 import { ResendOtp } from '@/service/operations/auth-api';
-import { getStoredData } from '@/utils/asyncStorage';
+import { getStoredData, StoreData } from '@/utils/asyncStorage';
 import { getOtp } from '@/utils/verify-otp';
 import bcrypt from 'bcryptjs';
 import { router } from 'expo-router';
@@ -20,28 +20,25 @@ const OtpVerificationPage = () => {
     const [otpInput, setOtpInput] = useState<string>('');
     const [storedOtp, setStoredOtp] = useState<string>('');
 
-    // Timer setup: 6 seconds expiry
-    const expiryTimer = new Date(Date.now() + 6000);
+    // Timer setup: 60 seconds expiry
+    const expiryTimer = new Date(Date.now() + 60000);
     const { seconds, restart } = useTimer({
         expiryTimestamp: expiryTimer,
         onExpire: () => console.log("Timer expired"),
     });
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const result = await getStoredData('phoneNumber');
-            const otp = await getOtp('otp');
-            setPhoneNumber(result || '');
-            setStoredOtp(otp || '');
-        };
-        fetchData();
-    }, []);
 
-    const handleVerificationOfOtp = () => {
+    const handleVerificationOfOtp = async () => {
+        const isNewUser = await getStoredData<boolean>('isNewUser')
         const isOtpCorrect = bcrypt.compareSync(otpInput, storedOtp);
         if (isOtpCorrect) {
-            console.log("User is verified");
+            if (isNewUser) {
+                router.replace("/personal-information")
+                return;
+            }
+            await StoreData('isVerified', true)
             router.replace('/home');
+            return;
         } else {
             console.log("Invalid OTP");
         }
@@ -51,6 +48,16 @@ const OtpVerificationPage = () => {
         const updatedOtp = await ResendOtp(phoneNumber)
         setStoredOtp(updatedOtp || '');
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await getStoredData<string>('phoneNumber');
+            const otp = await getOtp('otp');
+            setPhoneNumber(result || '');
+            setStoredOtp(otp || '');
+        };
+        fetchData();
+    }, []);
 
     return (
         <SafeAreaView className="flex-1">
@@ -82,7 +89,7 @@ const OtpVerificationPage = () => {
                     {/* Phone number display + change link */}
                     <View className="flex-row items-center gap-x-2 mt-3">
                         <Text className="text-sm font-medium">
-                            OTP sent to +91 {phoneNumber}
+                            OTP sent to +91{phoneNumber}
                         </Text>
                         <TouchableOpacity onPress={() => router.replace('/sign-in')}>
                             <Text className="text-[#004da8] underline text-sm font-medium">

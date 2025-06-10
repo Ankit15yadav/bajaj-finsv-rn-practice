@@ -35,6 +35,7 @@ export async function Login(phoneNumber: string) {
         }
 
         await save('otp', hashedOTP);
+        await StoreData('isNewUser', firstTimeLogin)
         await StoreData("auth-token", authToken);
         router.replace("/otp-verification");
 
@@ -70,14 +71,15 @@ export async function ResendOtp(phoneNumber: string) {
 export async function RefreshToken() {
     try {
         // passed this phoneNumber p capital that's why getting error from the server
-        const phoneNumber = await getStoredData('phoneNumber', "CALLING FROM REFRESH TOKEN");
+        const phoneNumber = await getStoredData<string>('phoneNumber', "CALLING FROM REFRESH TOKEN");
         // handle the edge case where phoneNumber might not be present the cache storage
 
-        console.log("CONSOLING THE PHONENUMBER FROM REFRESH TOKEN", phoneNumber)
+        // console.log("CONSOLING THE PHONENUMBER FROM REFRESH TOKEN", phoneNumber)
 
-        // if (!phoneNumber) {
-        //     // TODO: Force logout and clear all the cache in the asyncStorage of the user
-        // }
+        if (!phoneNumber) {
+            // TODO: Force logout and clear all the cache in the asyncStorage of the user
+            throw new Error("PHONE NUMBER IS NOT PRESENT , FORCE LOGOUT THE USER TO LOGIN AGAIN")
+        }
 
         const response = await axios.post(
             REFRESH_TOKEN_API,
@@ -86,7 +88,7 @@ export async function RefreshToken() {
 
         if (response.status !== 200) throw new Error("ERROR GETTING THE AUTHENTICATION TOKEN RESPONSE")
 
-        console.log('REFRESH TOKEN CALLED BY THE INTERCEPTOR')
+        // console.log('REFRESH TOKEN CALLED BY THE INTERCEPTOR')
         const { newAccessToken } = response?.data;
         return newAccessToken;
 

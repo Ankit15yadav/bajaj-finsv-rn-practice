@@ -3,7 +3,7 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import * as Haptic from 'expo-haptics';
 import { Tabs } from "expo-router";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function RootTabLayout() {
     return <Tabs
@@ -40,13 +40,13 @@ export default function RootTabLayout() {
                     options={{
                         headerShown: tab.id === 1 ? false : true,
                         title: tab.title,
-                        headerLeft: () => (
-                            <View>
-                                <Text>
-                                    back
-                                </Text>
-                            </View>
-                        )
+                        // headerLeft: () => (
+                        //     <View>
+                        //         <Text>
+                        //             back
+                        //         </Text>
+                        //     </View>
+                        // )
                     }}
                     listeners={{
                         tabPress: () => (

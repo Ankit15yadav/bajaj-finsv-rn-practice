@@ -28,7 +28,7 @@ export function customDrawerContent(props: DrawerContentComponentProps) {
                 </View>
 
                 {/* profile update percentag at the top of drawer */}
-                <ProfileWithProgress progress={90} />
+                <ProfileWithProgress progress={50} />
             </TouchableOpacity>
 
             <DrawerItemList {...props} />

@@ -6,3 +6,7 @@ export const authEndpoints = {
     RESEND_OTP_API: BASE_URL + "/auth/login/otp/resend",
     REFRESH_TOKEN_API: BASE_URL + "/auth/refresh"
 }
+
+export const userDetailsEndPoints = {
+    REGISTER_USER: BASE_URL + '/users/profile',
+}

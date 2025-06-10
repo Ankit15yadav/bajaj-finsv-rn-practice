@@ -6,6 +6,7 @@ const NotificationPage = () => {
     return (
         // main outer view
         <ScrollView className='min-h-full bg-white border-t border-t-gray-200'
+            style={{ flex: 1 }}
         >
             <View className='w-full min-h-screen '
             >
@@ -26,7 +27,7 @@ const NotificationPage = () => {
                 </View>
 
                 {/* notification message view */}
-                <View className='mt-2  flex flex-col justify-center items-center min-h-screen px-4' >
+                <View className='mt-2 flex-1 justify-center items-center  px-4' >
                     <Text className='font-semibold text-lg ' >
                         No New Notifications
                     </Text>

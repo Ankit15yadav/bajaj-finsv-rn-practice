@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        'bajaj-100': '#336ebd',
         bajaj: '#004da8',
         light_sky: '#B3DAF7',
       },

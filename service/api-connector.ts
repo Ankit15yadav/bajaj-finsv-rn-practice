@@ -23,14 +23,16 @@ export const apiConnector = (
     })
 }
 
+// interceptor log api requests
 axiosInstance.interceptors.request.use(
     async (config) => {
         try {
-            const token = await getStoredData('auth-token')
+            const token = await getStoredData<string>('auth-token')
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`
-                // console.log("axios interceptor", token)
+                console.log("axios interceptor", token)
             }
+            else console.log("token not presnet")
         } catch (error) {
             console.log("Error getting access token from the storage", error);
         }
@@ -42,6 +44,7 @@ axiosInstance.interceptors.request.use(
     }
 )
 
+// interceptor for api response
 axiosInstance.interceptors.response.use(
     (response) => response,
     async (error) => {

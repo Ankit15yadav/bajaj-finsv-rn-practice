@@ -2,9 +2,8 @@ import { Login } from '@/service/operations/auth-api';
 import { LoginInterface } from '@/types/auth';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Checkbox } from 'expo-checkbox';
-import { router } from 'expo-router';
 
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Image,
     Text,
@@ -27,12 +26,6 @@ const SignIn = () => {
     const handleLogin = async () => {
         await Login(formData.phoneNumber);
     };
-
-    useEffect(() => {
-        setTimeout(() => {
-            router.replace("/home")
-        }, 1000)
-    }, [])
 
     return (
         <SafeAreaView className="flex-1">
