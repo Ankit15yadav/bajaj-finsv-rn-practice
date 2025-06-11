@@ -31,6 +31,10 @@ const Layout = () => {
                         drawerItemStyle: {
                             display: 'none'
                         },
+                        headerStyle: {
+                            backgroundColor: '#004d95',
+                            height: 115
+                        },
                         headerTitle: () => null,
                         headerLeft: () => (
                             <CustomTrigger />
@@ -50,7 +54,7 @@ const Layout = () => {
                                     size={23}
                                     style={{
                                         marginRight: 15,
-                                        color: "#004DA8"
+                                        color: "white"
                                     }}
                                 />
                             </TouchableOpacity>

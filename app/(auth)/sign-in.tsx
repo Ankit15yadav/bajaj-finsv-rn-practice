@@ -15,7 +15,6 @@ import CountryFlag from "react-native-country-flag";
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-
 const SignIn = () => {
     const [formData, setFormData] = useState<LoginInterface>({
         phoneNumber: '',

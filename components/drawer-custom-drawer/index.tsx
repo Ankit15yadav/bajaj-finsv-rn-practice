@@ -1,5 +1,6 @@
 import { DrawerItem } from "@/assets/drawer-data/ItemList";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -68,7 +69,10 @@ export function customDrawerContent(props: DrawerContentComponentProps) {
                                 ) : (
                                     <TouchableOpacity
                                         style={styles.drawerItem}
-                                        onPress={() => alert('Logged Out')}
+                                        onPress={() => {
+                                            AsyncStorage.clear()
+                                            router.replace("/sign-in")
+                                        }}
                                     >
                                         <Ionicons
                                             name={childData.Icon as React.ComponentProps<typeof Ionicons>['name']}

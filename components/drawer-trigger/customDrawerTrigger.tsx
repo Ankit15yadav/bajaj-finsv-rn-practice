@@ -20,7 +20,7 @@ const CustomTrigger = () => {
                 <Ionicons name="menu-outline" size={28}
                     style={{
                         marginLeft: 10,
-                        color: '#004DA8',
+                        color: 'white',
                         fontWeight: '900'
                     }}
                 />
