@@ -1,10 +1,12 @@
 import { CardItem, imageMap } from '@/assets/hero-section-data/Data'
+import DoctorFlatList from '@/components/home/card/doctor.flatList'
+import RaiseAClaimCard from '@/components/home/card/raise-a-claim'
+import ConsultDoctorsSection from '@/components/home/consult.doctor.section'
 import * as Haptic from "expo-haptics"
 import { router } from 'expo-router'
 import { HeartIcon, MicIcon, Search } from 'lucide-react-native'
 import React from 'react'
 import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
-import DoctorFlatList from './_components/doctor.flatList'
 // import { SafeAreaView } from 'react-native-safe-area-context'
 
 const Home = () => {
@@ -12,12 +14,14 @@ const Home = () => {
     return (
         <ScrollView
             style={{
-                flex: 1
+                flex: 1,
+                backgroundColor: 'white'
             }}
         >
             {/* <SafeAreaView className="bg-white flex-1"> */}
+
             {/* main view */}
-            <View>
+            <View className=''>
                 {/* cards of the doc, lab , hospital , pharmacy */}
                 <View className="flex-row p-5 gap-2.5 items-center justify-between h-auto mb-5">
                     {
@@ -88,6 +92,14 @@ const Home = () => {
                     </View>
                 </View>
 
+                {/* raise claim card */}
+                <View>
+                    <RaiseAClaimCard />
+                </View>
+
+                <View className='p-5'>
+                    <ConsultDoctorsSection />
+                </View>
             </View>
             {/* </SafeAreaView> */}
         </ScrollView>

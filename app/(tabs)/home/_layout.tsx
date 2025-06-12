@@ -3,7 +3,7 @@ import CustomTrigger from "@/components/drawer-trigger/customDrawerTrigger";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { router } from "expo-router";
 import { Drawer } from 'expo-router/drawer';
-import { Dimensions, TouchableOpacity } from "react-native";
+import { Dimensions, TouchableOpacity, View } from "react-native";
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 const Layout = () => {
@@ -37,7 +37,9 @@ const Layout = () => {
                         },
                         headerTitle: () => null,
                         headerLeft: () => (
-                            <CustomTrigger />
+                            <View >
+                                <CustomTrigger />
+                            </View>
                         ),
 
                         headerRight: () => (
