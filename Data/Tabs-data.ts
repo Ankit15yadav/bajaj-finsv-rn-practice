@@ -1,4 +1,4 @@
-import { tabs } from "@/types/tabs";
+import { tabs } from "@/types/types";
 
 export const TabData: tabs[] = [
     {
@@ -30,5 +30,11 @@ export const TabData: tabs[] = [
         name: "health-files",
         title: "Health Files",
         iconName: "file-tray-full"
+    },
+    {
+        id: 6,
+        name: "Buddy",
+        title: "Buddy",
+        iconName: "chatbox-ellipses-outline"
     },
 ]

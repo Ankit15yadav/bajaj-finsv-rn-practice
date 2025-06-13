@@ -1,6 +1,8 @@
+import { DoctorSpecialityCardsData } from '@/Data/home-page'
 import React from 'react'
-import { Text, View } from 'react-native'
+import { Text, TouchableOpacity, View } from 'react-native'
 import OnlineIndicator from '../online-indicator'
+import DoctorSpecialitiesCard from './card/doctor-specialities-card'
 
 const ConsultDoctorsSection = () => {
     return (
@@ -19,8 +21,33 @@ const ConsultDoctorsSection = () => {
             </View>
 
             {/* specialities section */}
-            <View>
+            <View className='mt-6 flex flex-col gap-6'>
                 {/* TODO */}
+                <Text className='text-sm font-normal'> Consult any top doctors online in <Text className='font-bold'>just 60 seconds</Text> </Text>
+                {/* Text above consult doctors card */}
+                <View className='flex flex-row justify-between items-center'>
+                    <Text className='text-xl font-bold'>Popular Specialities</Text>
+                    {/* TODO : router push to online consult */}
+                    <TouchableOpacity>
+                        <Text className='font-bold text-bajaj text-xl'>View All</Text>
+                    </TouchableOpacity>
+                </View>
+
+                {/* Doctors specialities card */}
+                <View className='flex flex-row flex-wrap justify-between'>
+                    {
+                        DoctorSpecialityCardsData?.map((doc) => (
+                            <DoctorSpecialitiesCard
+                                key={doc.id}
+                                icon={doc.icon}
+                                id={doc.id}
+                                numberOfDocs={doc.numberOfDocs}
+                                onPress={doc.onPress}
+                                title={doc.title}
+                            />
+                        ))
+                    }
+                </View>
             </View>
         </View>
     )

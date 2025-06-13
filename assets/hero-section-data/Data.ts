@@ -1,4 +1,4 @@
-import { CardData } from "@/types/hero-section-card";
+import { CardData } from "@/types/types";
 export const CardItem: CardData[] = [
     {
         id: 1,

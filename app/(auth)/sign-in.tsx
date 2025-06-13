@@ -1,5 +1,5 @@
 import { Login } from '@/service/operations/auth-api';
-import { LoginInterface } from '@/types/auth';
+import { LoginInterface } from '@/types/types';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { Checkbox } from 'expo-checkbox';
 

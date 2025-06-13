@@ -15,7 +15,7 @@ const Home = () => {
         <ScrollView
             style={{
                 flex: 1,
-                backgroundColor: 'white'
+                backgroundColor: '#f9fafb'
             }}
         >
             {/* <SafeAreaView className="bg-white flex-1"> */}

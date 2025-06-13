@@ -1,4 +1,4 @@
-import { DrawerChild } from "@/types/drawer-items";
+import { DrawerChild } from "@/types/types";
 
 
 export const DrawerItem: DrawerChild[] = [
