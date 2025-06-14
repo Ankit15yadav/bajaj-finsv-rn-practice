@@ -2,6 +2,8 @@ import { CardItem, imageMap } from '@/assets/hero-section-data/Data'
 import DoctorFlatList from '@/components/home/card/doctor.flatList'
 import RaiseAClaimCard from '@/components/home/card/raise-a-claim'
 import ConsultDoctorsSection from '@/components/home/consult.doctor.section'
+import LabTests from '@/components/home/lab.tests'
+import SelectSymptoms from '@/components/home/symptoms.selection'
 import * as Haptic from "expo-haptics"
 import { router } from 'expo-router'
 import { HeartIcon, MicIcon, Search } from 'lucide-react-native'
@@ -97,9 +99,19 @@ const Home = () => {
                     <RaiseAClaimCard />
                 </View>
 
+                {/* consult doctor section */}
                 <View className='p-5'>
                     <ConsultDoctorsSection />
                 </View>
+
+                <View className='p-5'>
+                    <SelectSymptoms />
+                </View>
+
+                <View className='p-5 bg-slate-200'>
+                    <LabTests />
+                </View>
+
             </View>
             {/* </SafeAreaView> */}
         </ScrollView>

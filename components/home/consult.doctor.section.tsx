@@ -1,7 +1,7 @@
 import { DoctorSpecialityCardsData } from '@/Data/home-page'
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
-import OnlineIndicator from '../online-indicator'
+import OnlineIndicator from '../online-indicator-meeium'
 import DoctorSpecialitiesCard from './card/doctor-specialities-card'
 
 const ConsultDoctorsSection = () => {

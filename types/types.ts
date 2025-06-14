@@ -52,3 +52,17 @@ export interface tabs {
     title: string
     iconName: string
 }
+
+export interface SymptomsCardTypes {
+    id: string,
+    icon: string,
+    title: string,
+    onPress: RelativePathString
+}
+
+export interface ILabTest {
+    id: string,
+    icon: string,
+    title: string,
+    onPress: RelativePathString
+}

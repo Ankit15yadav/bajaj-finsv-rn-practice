@@ -1,4 +1,4 @@
-import { DoctorSepcialitiesCard } from "@/types/types";
+import { DoctorSepcialitiesCard, ILabTest, SymptomsCardTypes } from "@/types/types";
 import { RelativePathString } from "expo-router";
 
 export const DoctorSpecialityCardsData: DoctorSepcialitiesCard[] = [
@@ -89,4 +89,99 @@ export const doctorCardImageMap: Record<string, any> = {
 };
 
 
-// export const 
+export const SelectSymptomsData: SymptomsCardTypes[] = [
+
+    {
+        id: '1',
+        icon: 'fever',
+        title: "Fever",
+        onPress: "/wellsure" as RelativePathString
+    },
+    {
+        id: '2',
+        icon: 'hairfall',
+        title: "Hairfall",
+        onPress: "/wellsure" as RelativePathString
+    },
+    {
+        id: '3',
+        icon: 'joint',
+        title: "Joint Pain",
+        onPress: "/wellsure" as RelativePathString
+    },
+    {
+        id: '4',
+        icon: 'tooth',
+        title: "Tooth Ache",
+        onPress: "/wellsure" as RelativePathString
+    },
+    {
+        id: '5',
+        icon: 'skin',
+        title: "Skin Infection",
+        onPress: "/wellsure" as RelativePathString
+    },
+    {
+        id: '6',
+        icon: 'femaleOrg',
+        title: "Periods",
+        onPress: "/wellsure" as RelativePathString
+    },
+]
+
+export const symptomsCardImageMap: Record<string, any> = {
+    "fever": require('@/assets/home/symptoms/fever.png'),
+    "hairfall": require('@/assets/home/symptoms/hairfall.png'),
+    "joint": require('@/assets/home/symptoms/jointpain.png'),
+    "tooth": require('@/assets/home/symptoms/tooth.png'),
+    "skin": require('@/assets/home/symptoms/skinInfection.png'),
+    "femaleOrg": require('@/assets/home/symptoms/femaleOrg.png'),
+}
+
+export const LabTestData: ILabTest[] = [
+    {
+        id: '1',
+        icon: 'healthyHeart',
+        title: 'Healthy Heart',
+        onPress: '/wellsure' as RelativePathString
+    },
+    {
+        id: '2',
+        icon: 'fullBody',
+        title: 'Full Body Check-up',
+        onPress: '/wellsure' as RelativePathString
+    },
+    {
+        id: '3',
+        icon: 'ultrasound',
+        title: 'Ultrasound',
+        onPress: '/wellsure' as RelativePathString
+    },
+    {
+        id: '4',
+        icon: 'cancer',
+        title: 'Cancer',
+        onPress: '/wellsure' as RelativePathString
+    },
+    {
+        id: '5',
+        icon: 'arthritis',
+        title: 'Arthritis',
+        onPress: '/wellsure' as RelativePathString
+    },
+    {
+        id: '6',
+        icon: 'liver',
+        title: 'Healthy Liver',
+        onPress: '/wellsure' as RelativePathString
+    },
+]
+
+export const labTestCardImageMap: Record<string, any> = {
+    'arthritis': require("@/assets/home/lab-tests/arthritis.png"),
+    'fullBody': require("@/assets/home/lab-tests/full-body.png"),
+    'ultrasound': require("@/assets/home/lab-tests/ultrasound.png"),
+    'cancer': require("@/assets/home/lab-tests/cancer.png"),
+    'healthyHeart': require("@/assets/home/lab-tests/healthy-heart.png"),
+    'liver': require("@/assets/home/lab-tests/liver.png"),
+}
