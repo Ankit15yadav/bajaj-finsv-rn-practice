@@ -1,65 +1,199 @@
-import React from 'react'
-import { KeyboardAvoidingView, Platform, SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native'
-
-const messages = [
-    { id: '1', from: 'bot', text: 'Hello! I am Buddy, your chatbot assistant.' },
-    { id: '2', from: 'user', text: 'Hi Buddy!' },
-    { id: '3', from: 'bot', text: 'How can I help you today?' },
-    { id: '4', from: 'user', text: 'Tell me a joke.' },
-    { id: '5', from: 'bot', text: 'Why don’t developers go broke? Because they always cache money!' }
-]
+import React, { useEffect, useRef, useState } from 'react';
+import {
+    Alert,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
+} from 'react-native';
+import Markdown from 'react-native-markdown-display';
+import { socketService } from '../../service/socketServices';
+import { ChatState, Message } from '../../types/types';
 
 const Buddy = () => {
+    const [chatState, setChatState] = useState<ChatState>({
+        messages: [],
+        isGenerating: false,
+        connectionStatus: 'disconnected',
+    });
+    const [inputText, setInputText] = useState('');
+    const scrollViewRef = useRef<ScrollView>(null);
+    const currentStreamingMessage = useRef<string>('');
+
+    useEffect(() => {
+        socketService.connect();
+
+        const interval = setInterval(() => {
+            setChatState((prev) => ({
+                ...prev,
+                connectionStatus: socketService.isSocketConnected() ? 'connected' : 'disconnected',
+            }));
+        }, 1000);
+
+        return () => {
+            clearInterval(interval);
+            socketService.disconnect();
+        };
+    }, []);
+
+    const addMessage = (message: Omit<Message, 'id' | 'timestamp'>) => {
+        const newMessage: Message = {
+            ...message,
+            id: `${Date.now()}-${Math.random()}`,
+            timestamp: new Date(),
+        };
+
+        setChatState((prev) => ({
+            ...prev,
+            messages: [...prev.messages, newMessage],
+        }));
+
+        setTimeout(() => {
+            scrollViewRef.current?.scrollToEnd({ animated: true });
+        }, 100);
+    };
+
+    const updateLastMessage = (text: string) => {
+        setChatState((prev) => ({
+            ...prev,
+            messages: prev.messages.map((msg, index) =>
+                index === prev.messages.length - 1 ? { ...msg, text, isStreaming: true } : msg
+            ),
+        }));
+    };
+
+    const markLastMessageComplete = () => {
+        setChatState((prev) => ({
+            ...prev,
+            messages: prev.messages.map((msg, index) =>
+                index === prev.messages.length - 1 ? { ...msg, isStreaming: false } : msg
+            ),
+        }));
+    };
+
+    const handleSendMessage = () => {
+        if (!inputText.trim() || chatState.isGenerating) return;
+
+        if (chatState.connectionStatus === 'disconnected') {
+            Alert.alert('Error', 'Not connected to server');
+            return;
+        }
+
+        addMessage({
+            text: inputText.trim(),
+            isUser: true,
+        });
+
+        addMessage({
+            text: '',
+            isUser: false,
+            isStreaming: true,
+        });
+
+        setChatState((prev) => ({ ...prev, isGenerating: true }));
+        currentStreamingMessage.current = '';
+
+        socketService.generateContent(
+            inputText.trim(),
+            (chunk: string) => {
+                currentStreamingMessage.current += chunk;
+                updateLastMessage(currentStreamingMessage.current);
+                scrollViewRef.current?.scrollToEnd({ animated: true });
+            },
+            () => {
+                setChatState((prev) => ({ ...prev, isGenerating: false }));
+                markLastMessageComplete();
+                currentStreamingMessage.current = '';
+            },
+            (error: string) => {
+                setChatState((prev) => ({ ...prev, isGenerating: false }));
+                updateLastMessage(`Error: ${error}`);
+                markLastMessageComplete();
+                currentStreamingMessage.current = '';
+            }
+        );
+
+        setInputText('');
+    };
+
     return (
-        <SafeAreaView
-            className='flex-1'
+        <KeyboardAvoidingView
+            className="flex-1 bg-gray-100"
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+            keyboardVerticalOffset={100}
         >
-            <KeyboardAvoidingView
-                className='flex-1'
-                behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-                keyboardVerticalOffset={100}
+            {/* Connection Status Bar */}
+            <View
+                className={`py-2 px-4 items-center ${chatState.connectionStatus === 'connected' ? 'bg-green-600' : 'bg-red-600'
+                    }`}
             >
-                <View className="flex-1 bg-white px-4 py-6">
+                <Text className="text-white font-bold">
+                    {chatState.connectionStatus === 'connected' ? 'Connected' : 'Disconnected'}
+                </Text>
+            </View>
 
-                    {/* Chat Header */}
-                    <View className="mb-4">
-                        <Text className="text-xl font-bold text-center text-gray-800">💬 Buddy Chat</Text>
-                    </View>
-
-                    {/* Chat Messages */}
-                    <ScrollView className="flex-1 mb-4" contentContainerStyle={{ paddingBottom: 80 }}>
-                        {messages.map((msg) => (
-                            <View
-                                key={msg.id}
-                                className={`flex-row mb-3 ${msg.from === 'user' ? 'justify-end' : 'justify-start'}`}
+            {/* Message List */}
+            <ScrollView
+                ref={scrollViewRef}
+                className="flex-1"
+                contentContainerStyle={{ padding: 16 }}
+            >
+                {chatState.messages.map((message) => (
+                    <View
+                        key={message.id}
+                        className={`my-1 px-4 py-3 max-w-[100%] rounded-2xl ${message.isUser
+                            ? 'bg-blue-500 self-end'
+                            : 'bg-white self-start border border-gray-300'
+                            }`}
+                    >
+                        {message.isUser ? (
+                            <Text className="text-white text-sm">{message.text}</Text>
+                        ) : (
+                            <Markdown
+                                style={{
+                                    body: { color: '#333', fontSize: 12, marginBottom: 4, flexDirection: 'column', gap: 3 },
+                                    strong: { fontWeight: 'bold' },
+                                    em: { fontStyle: 'italic' },
+                                }}
                             >
-                                <View
-                                    className={`max-w-[75%] px-4 py-2 rounded-2xl ${msg.from === 'user'
-                                        ? 'bg-blue-500 rounded-br-none'
-                                        : 'bg-gray-200 rounded-bl-none'
-                                        }`}
-                                >
-                                    <Text className={`${msg.from === 'user' ? 'text-white' : 'text-black'}`}>
-                                        {msg.text}
-                                    </Text>
-                                </View>
-                            </View>
-                        ))}
-                    </ScrollView>
-
-                    {/* Chat Input */}
-                    <View className="absolute bottom-2 left-4 right-4 bg-gray-100 px-4 py-2 rounded-lg flex-row items-center border border-gray-300">
-                        <TextInput
-                            className="flex-1 text-sm text-gray-800"
-                            placeholder="Type a message..."
-                            placeholderTextColor="#888"
-                        />
-                        {/* Fake disabled input, functional input can be wired later */}
+                                {message.text}
+                            </Markdown>
+                        )}
+                        {message.isStreaming && (
+                            <Text className="text-blue-500 mt-1 text-lg">●</Text>
+                        )}
                     </View>
-                </View>
-            </KeyboardAvoidingView>
-        </SafeAreaView>
-    )
-}
+                ))}
+            </ScrollView>
 
-export default Buddy
+            {/* Input Section */}
+            <View className="flex-row items-end bg-white p-4">
+                <TextInput
+                    className="flex-1 border border-gray-300 rounded-full px-4 py-3 max-h-28 mr-3"
+                    value={inputText}
+                    onChangeText={setInputText}
+                    placeholder="Type your message..."
+                    multiline
+                    editable={!chatState.isGenerating}
+                />
+                <TouchableOpacity
+                    className={`px-5 py-3 rounded-full ${chatState.isGenerating || !inputText.trim()
+                        ? 'bg-gray-400'
+                        : 'bg-blue-500'
+                        }`}
+                    onPress={handleSendMessage}
+                    disabled={chatState.isGenerating || !inputText.trim()}
+                >
+                    <Text className="text-white font-bold">
+                        {chatState.isGenerating ? '...' : 'Send'}
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </KeyboardAvoidingView>
+    );
+};
+
+export default Buddy;

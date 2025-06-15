@@ -13,6 +13,7 @@
   "dependencies": {
     "@expo/vector-icons": "^14.1.0",
     "@google/genai": "^1.5.0",
+    "@modelcontextprotocol/sdk": "^1.12.3",
     "@react-native-async-storage/async-storage": "2.1.2",
     "@react-navigation/bottom-tabs": "^7.3.10",
     "@react-navigation/drawer": "^7.3.9",
@@ -48,6 +49,7 @@
     "react-native-circular-progress": "^1.4.1",
     "react-native-country-flag": "^2.0.2",
     "react-native-gesture-handler": "~2.24.0",
+    "react-native-markdown-display": "^7.0.2",
     "react-native-reanimated": "^3.17.5",
     "react-native-safe-area-context": "^5.4.0",
     "react-native-screens": "~4.11.1",
@@ -55,6 +57,7 @@
     "react-native-web": "~0.20.0",
     "react-native-webview": "13.13.5",
     "react-timer-hook": "^4.0.5",
+    "socket.io-client": "^4.8.1",
     "tailwindcss": "3.4.17"
   },
   "devDependencies": {

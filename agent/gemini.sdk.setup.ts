@@ -1,17 +1,33 @@
 import { GoogleGenAI } from "@google/genai";
-const API_KEY = ''
 
-const ai = new GoogleGenAI({ apiKey: API_KEY })
+const API_KEY = process.env.EXPO_PUBLIC_GEMINI_API!;
+const genAi = new GoogleGenAI({ apiKey: API_KEY });
 
-const PROMPT = 'what is the use of ai in the current world'
+// This function is now an async generator
+export async function* AgentInitialization(prompt: string) {
+    const result = await genAi.models.generateContentStream({
+        model: 'gemini-2.0-flash',
+        contents: [{ role: 'user', parts: [{ text: prompt }] }],
+        config: {
+            maxOutputTokens: 400,
+        },
+    });
 
-async function main() {
-    const respone = await ai.models.generateContent({
-        model: 'gemini-2.0-flash-001',
-        contents: PROMPT
-    })
-
-    console.log(respone);
+    for await (const chunk of result) {
+        yield chunk.text;
+    }
 }
 
-main();
+export async function AgentInitialization2(prompt: string) {
+    const response = await genAi.models.generateContentStream({
+        model: 'gemini-2.0-flash',
+        contents: prompt,
+        config: { maxOutputTokens: 400 },
+    });
+
+    for await (const chunk of response) {
+        console.log(chunk.text)
+    }
+}
+
+AgentInitialization2('HOw to use the agentic work flow using AI')

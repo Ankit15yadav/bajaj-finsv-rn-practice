@@ -66,3 +66,24 @@ export interface ILabTest {
     title: string,
     onPress: RelativePathString
 }
+
+export interface ITopHospitals {
+    id: number,
+    image: string,
+    logo: string,
+    name: string
+}
+
+export interface Message {
+    id: string;
+    text: string;
+    isUser: boolean;
+    timestamp: Date;
+    isStreaming?: boolean;
+}
+
+export interface ChatState {
+    messages: Message[];
+    isGenerating: boolean;
+    connectionStatus: 'connected' | 'disconnected' | 'connecting';
+}
