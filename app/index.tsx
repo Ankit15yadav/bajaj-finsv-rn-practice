@@ -15,12 +15,14 @@ export default function RootLayout() {
       // AsyncStorage.clear()
       const token = await getStoredData<string>('auth-token');
       const isVerified = await getStoredData<boolean>('isVerified') ?? false;
+
       if (token && isVerified) {
         router.replace('/home');
       } else {
         setValue(false); // Show sign-in if not verified or no token
       }
     }
+
     getToken();
 
   }, [])

@@ -30,7 +30,7 @@ axiosInstance.interceptors.request.use(
             const token = await getStoredData<string>('auth-token')
             if (token) {
                 config.headers.Authorization = `Bearer ${token}`
-                console.log("axios interceptor", token)
+                // console.log("axios interceptor", token)
             }
             else console.log("token not presnet")
         } catch (error) {

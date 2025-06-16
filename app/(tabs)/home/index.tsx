@@ -5,6 +5,7 @@ import DoctorFlatList from '@/components/home/flat-lists/doctor.flatList'
 import LabTests from '@/components/home/lab.tests'
 import SelectSymptoms from '@/components/home/symptoms.selection'
 import TopHospitalsComponent from '@/components/home/top.hospital'
+import { useUser } from '@/contexts/user.context'
 import * as Haptic from "expo-haptics"
 import { router } from 'expo-router'
 import { HeartIcon, MicIcon, Search } from 'lucide-react-native'
@@ -14,6 +15,8 @@ import { Image, ScrollView, Text, TouchableOpacity, View } from 'react-native'
 
 const Home = () => {
 
+    const { user } = useUser()
+
     return (
         <ScrollView
             style={{
@@ -21,6 +24,9 @@ const Home = () => {
                 backgroundColor: '#f9fafb'
             }}
         >
+
+            <View>
+            </View>
             {/* <SafeAreaView className="bg-white flex-1"> */}
 
             {/* main view */}
@@ -57,7 +63,7 @@ const Home = () => {
                 <View className="pt-5 bg-[#E6F7FF] p-5">
                     <View className="flex-row items-center justify-between">
                         <Text className="text-xl font-black text-[#004da8]">
-                            Hi Ankit
+                            Hi {user?.firstName}
                         </Text>
                         <TouchableOpacity>
                             <Text className="w-[30px] h-[30px] rounded-full border-[6px] bg-yellow-400 border-[#004da8]">

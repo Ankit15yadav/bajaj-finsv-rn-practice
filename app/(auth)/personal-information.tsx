@@ -1,3 +1,4 @@
+import { useUser } from '@/contexts/user.context'
 import { RegisterUserForFirst } from '@/service/operations/user.apis'
 import { UserInitialInformation } from '@/types/types'
 import React, { useState } from 'react'
@@ -5,6 +6,8 @@ import { Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpa
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 const PersonalInformationOfUserAfterFirstLogin = () => {
+
+    const { refreshUser } = useUser()
 
     const [formData, setFormData] = useState<UserInitialInformation>({
         firstName: '',
@@ -30,6 +33,7 @@ const PersonalInformationOfUserAfterFirstLogin = () => {
 
     const handleSubmit = async () => {
         await RegisterUserForFirst(formData)
+        await refreshUser();
     }
 
     return (

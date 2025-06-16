@@ -1,6 +1,7 @@
+import { User } from "@/types/types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-export async function StoreData(key: string, value: string | boolean) {
+export async function StoreData(key: string, value: string | boolean | User) {
     try {
         const jsonValue = JSON.stringify(value);
         await AsyncStorage.setItem(key, jsonValue);
@@ -10,7 +11,7 @@ export async function StoreData(key: string, value: string | boolean) {
     }
 }
 
-export async function getStoredData<T extends string | boolean>(key: string, message?: string): Promise<T | null> {
+export async function getStoredData<T extends string | boolean | User>(key: string, message?: string): Promise<T | null> {
     try {
         const rawValue = await AsyncStorage.getItem(key);
         if (rawValue === null) return null;

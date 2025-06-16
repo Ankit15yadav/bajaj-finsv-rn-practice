@@ -1,5 +1,17 @@
 import { RelativePathString } from "expo-router";
 
+export type User = {
+    id: String
+    firstName: String
+    lastName: String
+    phoneNumber: String
+    age: String
+    gender: 'male' | 'female' | 'other' | null
+    bloodGroup: String
+    height: String
+    weight: String
+}
+
 export interface UserInitialInformation {
     firstName: string | null | undefined,
     lastName: string | null | undefined,

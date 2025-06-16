@@ -1,3 +1,4 @@
+import { Message } from "@/types/types";
 import { io, Socket } from "socket.io-client";
 
 class SocketService {
@@ -5,7 +6,7 @@ class SocketService {
     private isConnected: boolean = false
 
     // function for connection establishment
-    public connect(serverUrl: string = 'http://192.168.29.193:8000') {
+    public connect(serverUrl: string = 'http://192.168.29.193:4000') {
         // if socket is already connected then no need to make a new connection
         if (this.socket?.connected) return;
 
@@ -38,7 +39,7 @@ class SocketService {
         }
     }
 
-    public generateContent(prompt: string, onChunk: (text: string) => void, onComplete: () => void, onError: (error: string) => void) {
+    public generateContent(prompt: string, history: Message[], onChunk: (text: string) => void, onComplete: () => void, onError: (error: string) => void) {
         if (!this.socket?.connected) {
             onError("not connected to the server");
             return;
@@ -70,7 +71,7 @@ class SocketService {
             this.cleanUpListeners();
         })
 
-        this.socket.emit('generate-stream', { prompt })
+        this.socket.emit('generate-stream', { prompt, history })
     }
 
     private cleanUpListeners() {

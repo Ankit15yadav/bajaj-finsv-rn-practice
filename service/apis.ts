@@ -9,4 +9,5 @@ export const authEndpoints = {
 
 export const userDetailsEndPoints = {
     REGISTER_USER: BASE_URL + '/users/profile',
+    GET_USER_INFORMATION: BASE_URL + '/user'
 }

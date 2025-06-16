@@ -98,6 +98,7 @@ const Buddy = () => {
 
         socketService.generateContent(
             inputText.trim(),
+            chatState?.messages,
             (chunk: string) => {
                 currentStreamingMessage.current += chunk;
                 updateLastMessage(currentStreamingMessage.current);

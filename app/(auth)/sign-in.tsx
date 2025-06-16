@@ -16,6 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 const SignIn = () => {
+
     const [formData, setFormData] = useState<LoginInterface>({
         phoneNumber: '',
         notifications: false,
@@ -33,7 +34,6 @@ const SignIn = () => {
                     source={require("@/assets/images/logo-small.png")}
                     className="w-[85px] h-[50px]"
                 />
-
                 <View className="w-full bg-white mt-8 rounded-xl p-4">
                     <Text className="font-extrabold text-base">
                         Enter your mobile number

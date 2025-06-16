@@ -1,3 +1,4 @@
+import { useUser } from '@/contexts/user.context';
 import { ResendOtp } from '@/service/operations/auth-api';
 import { getStoredData, StoreData } from '@/utils/asyncStorage';
 import { getOtp } from '@/utils/verify-otp';
@@ -20,6 +21,8 @@ const OtpVerificationPage = () => {
     const [otpInput, setOtpInput] = useState<string>('');
     const [storedOtp, setStoredOtp] = useState<string>('');
 
+    const { refreshUser } = useUser()
+
     // Timer setup: 60 seconds expiry
     const expiryTimer = new Date(Date.now() + 60000);
     const { seconds, restart } = useTimer({
@@ -37,6 +40,7 @@ const OtpVerificationPage = () => {
                 return;
             }
             await StoreData('isVerified', true)
+            await refreshUser();
             router.replace('/home');
             return;
         } else {

@@ -1,4 +1,5 @@
 import { DrawerItem } from "@/assets/drawer-data/ItemList";
+import { useUser } from "@/contexts/user.context";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DrawerContentComponentProps, DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
@@ -7,6 +8,9 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ProfileWithProgress } from "../profile-with-progress";
 
 export function customDrawerContent(props: DrawerContentComponentProps) {
+
+    const { user } = useUser()
+
     return (
         <DrawerContentScrollView {...props} style={styles.drawerScrollView}>
 
@@ -14,7 +18,7 @@ export function customDrawerContent(props: DrawerContentComponentProps) {
             <TouchableOpacity style={styles.profileContainer}>
                 <View>
                     <Text style={styles.profileName}>
-                        Ankit yadav
+                        {user?.firstName}{user?.lastName}
                     </Text>
                     <View style={styles.editProfileContainer}>
                         <Text style={styles.editProfileText}>
@@ -69,8 +73,8 @@ export function customDrawerContent(props: DrawerContentComponentProps) {
                                 ) : (
                                     <TouchableOpacity
                                         style={styles.drawerItem}
-                                        onPress={() => {
-                                            AsyncStorage.clear()
+                                        onPress={async () => {
+                                            await AsyncStorage.clear();
                                             router.replace("/sign-in")
                                         }}
                                     >
@@ -111,7 +115,8 @@ const styles = StyleSheet.create({
     },
     profileName: {
         fontWeight: '700',
-        fontSize: 18
+        fontSize: 18,
+        marginRight: 4
     },
     editProfileContainer: {
         flexDirection: "row",
