@@ -2,7 +2,6 @@ import { getStoredData, StoreData } from '@/utils/asyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios, { AxiosRequestHeaders, AxiosResponse, Method } from 'axios';
 import { router } from 'expo-router';
-import { authEndpoints } from './apis';
 import { RefreshToken } from './operations/auth-api';
 
 
@@ -51,12 +50,12 @@ axiosInstance.interceptors.response.use(
         console.log("GOING IN INTERCEPTOR OF RESPONSE")
 
         const originalReq = error.config;
-        const isRefershCall = originalReq.url?.endsWith(authEndpoints.REFRESH_TOKEN_API) ||
-            originalReq.url === authEndpoints.REFRESH_TOKEN_API;
+        // const isRefershCall = originalReq.url?.endsWith(authEndpoints.REFRESH_TOKEN_API) ||
+        //     originalReq.url === authEndpoints.REFRESH_TOKEN_API;
 
-        if (isRefershCall) {
-            return Promise.reject(error);
-        }
+        // if (isRefershCall) {
+        //     return Promise.reject(error);
+        // }
 
         if (error?.response?.status === 401 && !originalReq._retry) {
             originalReq._retry = true;

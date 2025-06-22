@@ -99,3 +99,35 @@ export interface ChatState {
     isGenerating: boolean;
     connectionStatus: 'connected' | 'disconnected' | 'connecting';
 }
+
+export interface GetDoctorsParams {
+    name?: string;
+    specialization?: string;
+    lastId?: string;
+    take?: number;
+    fee?: number;
+}
+
+export interface Doctor {
+    id: string;
+    fullName: string;
+    email: string;
+    phone: string;
+    gender: string;
+    dob: Date;
+    profileImage?: string | null;
+    specialization: string;
+    experienceYears: number;
+    education: string;
+    languagesSpoken: string[];
+    consultationFee: number;
+    isVerified: boolean;
+    rating: number;
+    bio?: string | null;
+    address?: string | null;
+    city: string;
+    state: string;
+    pincode: string;
+    createdAt: Date;
+    updatedAt: Date;
+}

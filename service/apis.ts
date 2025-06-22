@@ -1,5 +1,5 @@
 const BASE_URL = process.env.EXPO_PUBLIC_REACT_NATIVE_BASE_URL!;
-console.log(BASE_URL);
+// console.log(BASE_URL);
 
 export const authEndpoints = {
     LOGIN_API: BASE_URL + "/auth/login",
@@ -10,4 +10,8 @@ export const authEndpoints = {
 export const userDetailsEndPoints = {
     REGISTER_USER: BASE_URL + '/users/profile',
     GET_USER_INFORMATION: BASE_URL + '/user'
+}
+
+export const DoctorsDetailsEndPoints = {
+    GET_DOCTOR_DETAILS: BASE_URL + '/information/doctor'
 }
