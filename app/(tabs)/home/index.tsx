@@ -17,7 +17,7 @@ const Home = () => {
     const { user } = useUser()
 
     // Bottom sheet setup
-    const snapPoints = useMemo(() => ['50%', '80%'], [])
+    const snapPoints = useMemo(() => ['70%', '90%'], [])
     const bottomSheetRef = useRef<BottomSheet>(null)
 
     const openBottomSheet = useCallback(() => {

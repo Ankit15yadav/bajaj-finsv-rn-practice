@@ -82,7 +82,7 @@ const PersonalInformationOfUserAfterFirstLogin = () => {
                                 placeholder='Yadav'
                                 placeholderTextColor={'gray'}
                                 value={formData.lastName ?? ''}
-                                onChangeText={handleTextInsertion('firstName')}
+                                onChangeText={handleTextInsertion('lastName')}
                             />
                         </View>
 

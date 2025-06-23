@@ -22,7 +22,11 @@
       },
       "softwareKeyboardLayoutMode": "pan",
       "edgeToEdgeEnabled": true,
-      "package": "com.ankit1501.bajaj_rn"
+      "package": "com.ankit1501.bajaj_rn",
+      "permissions": [
+        "android.permission.ACCESS_COARSE_LOCATION",
+        "android.permission.ACCESS_FINE_LOCATION"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -56,6 +60,7 @@
       "eas": {
         "projectId": "9bb3803d-02c2-4371-b130-b0398fa4b1a0"
       }
-    }
+    },
+    "owner": "ankit1501"
   }
 }
